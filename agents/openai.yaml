@@ -1,0 +1,4 @@
+interface:
+  display_name: "img2pptx"
+  short_description: "Rebuild slide images as high-fidelity, maximally editable PPTX decks."
+  default_prompt: "Use $img2pptx in max-editable-fidelity mode. Rebuild ordinary text, rich text runs, and simple geometry as editable PPT objects; extract only artistic text, unsupported fonts, photos, icons, and complex visuals as PNG assets; run visual diff QA when a preview can be rendered."
