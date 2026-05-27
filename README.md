@@ -38,6 +38,45 @@ Install if needed:
 python -m pip install python-pptx pillow numpy
 ```
 
+For preview rendering and visual-diff iteration, use one of:
+
+- macOS Quick Look (`qlmanage`, built into most Mac systems)
+- Microsoft PowerPoint on Windows plus `pywin32`
+- LibreOffice (`soffice` / `libreoffice`)
+
+If LibreOffice exports PDF before PNG on a machine, install one PDF-to-PNG helper:
+
+- `PyMuPDF`
+- Poppler `pdftoppm`
+- ImageMagick `magick`
+
+## Environment Check
+
+Run the doctor script before using the skill on a new computer:
+
+```bash
+python scripts/doctor.py --out scratch/doctor_report.json
+```
+
+It checks Python packages, preview renderers, common Chinese/English fonts, and local platform details. Use `--font-dir` or `IMG2PPTX_FONT_DIRS` when source-slide fonts live outside the system font folders.
+
+## Windows Setup
+
+On Windows, run PowerShell from the skill directory:
+
+```powershell
+Set-ExecutionPolicy -Scope Process Bypass
+.\scripts\setup_windows.ps1 -Preview
+```
+
+This installs the required Python packages plus `pywin32` and `PyMuPDF`, then writes `scratch/doctor_report.json`. If the machine does not have Microsoft PowerPoint and you want LibreOffice fallback rendering, run:
+
+```powershell
+.\scripts\setup_windows.ps1 -Preview -InstallLibreOffice
+```
+
+For Windows PowerPoint delivery, prefer previewing with local PowerPoint because it catches the same font metrics and text wrapping the final user will see.
+
 ## Workflow
 
 1. Put source slide images in a working folder.
@@ -51,6 +90,14 @@ python -m pip install python-pptx pillow numpy
 9. Run `scripts/inspect_pptx.py` before delivery.
 
 ## Key Commands
+
+```bash
+python scripts/doctor.py --out scratch/doctor_report.json
+```
+
+```powershell
+.\scripts\setup_windows.ps1 -Preview
+```
 
 ```bash
 python scripts/font_inventory.py --check "PingFang SC" "Hiragino Sans GB" --out scratch/font_report.json

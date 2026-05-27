@@ -91,6 +91,28 @@ python -m pip install python-pptx
 
 For image work, Pillow and NumPy are required. The Codex bundled workspace Python usually includes them.
 
+Before running the workflow on a new computer, check the local environment:
+
+```bash
+python /path/to/skill/scripts/doctor.py \
+  --out scratch/doctor_report.json
+```
+
+Read the doctor report before judging fidelity differences across machines. Missing fonts usually cause the largest visible changes. Missing preview tools do not prevent PPTX generation, but they weaken the preview/diff refinement loop. The preview script can use macOS `qlmanage`, Windows Microsoft PowerPoint via `pywin32`, or LibreOffice. If LibreOffice only exports PDF, install PyMuPDF, Poppler `pdftoppm`, or ImageMagick `magick` for PNG previews.
+
+On Windows, the recommended setup command is:
+
+```powershell
+Set-ExecutionPolicy -Scope Process Bypass
+.\scripts\setup_windows.ps1 -Preview
+```
+
+If Microsoft PowerPoint is unavailable and LibreOffice fallback rendering is needed:
+
+```powershell
+.\scripts\setup_windows.ps1 -Preview -InstallLibreOffice
+```
+
 Check local font availability:
 
 ```bash
